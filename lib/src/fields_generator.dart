@@ -8,6 +8,8 @@ import 'package:source_helper/source_helper.dart';
 import 'annotations.dart';
 
 class FieldsLibraryGenerator extends GeneratorForAnnotation<Fields> {
+  static List<String> parts = [];
+
   @override
   String generateForAnnotatedElement(
     Element element,
@@ -38,9 +40,12 @@ class FieldsLibraryGenerator extends GeneratorForAnnotation<Fields> {
 
     final code = StringBuffer();
 
-    final fileName =
-        element.library!.source.uri.pathSegments.last.split('.').first;
-    code.writeln("part of '${fileName}.dart';");
+    final fileName = element.library!.source.uri.pathSegments.last.split('.').first;
+
+    if (!parts.contains(fileName)) {
+      code.writeln("part of '${fileName}.dart';");
+      parts.add(fileName);
+    }
 
     if (type == FieldClassType.classType || type == null) {
       code.writeln(_generateClassCode(element, annotationValue));
