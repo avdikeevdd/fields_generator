@@ -40,7 +40,9 @@ class FieldsLibraryGenerator extends GeneratorForAnnotation<Fields> {
 
     final code = StringBuffer();
 
-    final fileName = element.library!.source.uri.pathSegments.last.split('.').first;
+    final fileNameParts = element.library!.source.uri.pathSegments.last.split('.');
+    fileNameParts.removeLast();
+    final fileName = fileNameParts.join('.');
 
     if (!parts.contains(fileName)) {
       code.writeln("part of '${fileName}.dart';");
