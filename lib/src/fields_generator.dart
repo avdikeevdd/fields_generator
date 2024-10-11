@@ -150,6 +150,10 @@ class FieldsLibraryGenerator extends GeneratorForAnnotation<Fields> {
       code.writeln('  final String value;');
       code.writeln('  const $enumName(this.value);');
 
+      code.writeln('  factory $enumName.from(String value) {');
+      code.writeln('    return values.firstWhere((e) => e.value == value);');
+      code.writeln('  }');
+
       code.writeln('}');
     }
 
